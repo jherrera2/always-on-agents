@@ -9,6 +9,11 @@ allowances, and a reading coach.
 This repo is not the setup itself (that is full of private data). It is a write-up of **how it
 works, how the agents work together, and — mostly — what broke and how I found out.**
 
+<p align="center">
+  <img src="docs/images/voice-note.jpg" alt="Telegram chat: two voice notes, each answered with the transcript and the item added to a shared grocery list; the agent reads a mis-heard brand name as the right one and asks to be corrected if wrong" width="420">
+</p>
+<p align="center"><em>Voice note in, transcribed on the Mac mini, echoed back to confirm. It caught a mis-hearing ("Raul's" → Rao's) and said so.</em></p>
+
 ## Architecture
 
 ```mermaid
