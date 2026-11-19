@@ -1,0 +1,7 @@
+{
+  "agent": "assistant",
+  "date": "2026-01-15",
+  "status": "One short sentence: what is in flight, or 'idle, nothing in flight'.",
+  "needs_you": false,
+  "needs": ""
+}

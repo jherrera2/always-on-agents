@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  One launchd job per agent. Copy to ~/Library/LaunchAgents/com.example.agent.AGENT_NAME.plist,
+  replace every CAPITALISED placeholder, then:
+    launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.example.agent.AGENT_NAME.plist
+  LAUNCHER_PATH is the script that starts `claude` inside a per-agent tmux server
+  (see the Credit section in docs/setup.md).
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.example.agent.AGENT_NAME</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>LAUNCHER_PATH</string>
+    <string>AGENT_NAME</string>
+  </array>
+
+  <!-- The agent's project folder: its CLAUDE.md and memory live here. -->
+  <key>WorkingDirectory</key>
+  <string>HOME_DIR/agents/AGENT_NAME</string>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <!-- launchd starts with a minimal PATH; include where claude, tmux and bun live. -->
+    <key>PATH</key>
+    <string>HOME_DIR/.bun/bin:HOME_DIR/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+    <!-- One state dir per agent. The bot token lives in its .env (mode 600), never here. -->
+    <key>TELEGRAM_STATE_DIR</key>
+    <string>HOME_DIR/.claude/channels/telegram-AGENT_NAME</string>
+  </dict>
+
+  <key>RunAtLoad</key>
+  <true/>
+  <!-- Restart whenever the session exits. -->
+  <key>KeepAlive</key>
+  <true/>
+  <!-- Seconds between restarts, so a crash loop doesn't spin. -->
+  <key>ThrottleInterval</key>
+  <integer>10</integer>
+
+  <key>StandardOutPath</key>
+  <string>/tmp/agent-AGENT_NAME.log</string>
+  <key>StandardErrorPath</key>
+  <string>/tmp/agent-AGENT_NAME.log</string>
+</dict>
+</plist>
